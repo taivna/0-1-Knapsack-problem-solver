@@ -14,7 +14,7 @@ L = []
 
 
 def generateInputs():
-    global n, C
+    global n, C, wt, val
     C = randint(20, 30)
     n = randint(5, 10)
     print('\nInput:\n')
@@ -24,9 +24,7 @@ def generateInputs():
     for _ in range(n):
         weight = randint(1, 15)
         value = randint(5, 50)
-        global wt
         wt.append(weight)
-        global val
         val.append(value)
 
     print(f'Weight of items: {wt} = ' + str(sum(wt)))
@@ -37,7 +35,7 @@ def generateInputs():
 
 def knapSack():
     # L is a list of n+1 number of items, where each item is a list itself containing C+1 number of items.
-    global L
+    global n, C, L
     L = [[0 for x in range(C+1)] for x in range(n+1)]
 
     # Build a table K[n+1][C+1] in bottom up manner, each K[][] cell in the table holds a total value.
@@ -63,7 +61,7 @@ def knapSack():
 
 def printOptimalSubset():
     global n, C, L
-    while n >= 0 and C >= 0:
+    while n > 0:
         # Starting from the bottom-right (L[n][C]) value, check if the value above it is equal to it
         if L[n][C] == L[n-1][C]:
             # If equal, then item at index n-1 is not included in the chosen subset.
