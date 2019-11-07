@@ -1,11 +1,43 @@
 # A Dynamic Programming (Tabulation method) based solution for 0-1 Knapsack problem
-# Returns the maximum value that can be put in a knapsack of capacity C
 
 from random import randint
 
+# Declaring variables
+n = 0
+C = 0
+wt = []
+val = []
+L = []
 
-def knapSack(C, wt, val, n):
+
+# Function for generating the inputs randomly
+
+
+def generateInputs():
+    global n, C
+    C = randint(20, 30)
+    n = randint(5, 10)
+    print('\nInput:\n')
+    print(f'Knapsack capacity: {C}')
+    print(f'Number of items: {n}')
+
+    for _ in range(n):
+        weight = randint(1, 15)
+        value = randint(5, 50)
+        global wt
+        wt.append(weight)
+        global val
+        val.append(value)
+
+    print(f'Weight of items: {wt} = ' + str(sum(wt)))
+    print(f'Value of items: {val} = ' + str(sum(val)))
+
+# Returns the maximum value that can be put in a knapsack of capacity C
+
+
+def knapSack():
     # L is a list of n+1 number of items, where each item is a list itself containing C+1 number of items.
+    global L
     L = [[0 for x in range(C+1)] for x in range(n+1)]
 
     # Build a table K[n+1][C+1] in bottom up manner, each K[][] cell in the table holds a total value.
@@ -24,47 +56,33 @@ def knapSack(C, wt, val, n):
             # then choose the maximum of 2 cases where one includes the ith item and the other doesn't
             else:
                 L[i][w] = max(L[i-1][w], val[i-1] + L[i-1][w-wt[i-1]])
+    return L[n][C]
 
-    copyN = n
-    copyC = C
-    # Setting the weights and values of items not included in the knapsack to 0
-    while copyN >= 0 and copyC >= 0:
-        # Starting from the bottom-right (L[copyN][copyC]) value, check if the value above it is equal to it
-        if L[copyN][copyC] == L[copyN-1][copyC]:
-            # If equal, then item at index copyN-1 is not included in the chosen subset.
-            wt[copyN-1] = 0
-            val[copyN-1] = 0
+# Function for setting the excluded items to 0 and print the optimal subset
+
+
+def printOptimalSubset():
+    global n, C, L
+    while n >= 0 and C >= 0:
+        # Starting from the bottom-right (L[n][C]) value, check if the value above it is equal to it
+        if L[n][C] == L[n-1][C]:
+            # If equal, then item at index n-1 is not included in the chosen subset.
+            wt[n-1] = 0
+            val[n-1] = 0
             # move up 1 row
-            copyN = copyN-1
+            n = n-1
         else:
-            # If not equal, then item at index copyN-1 is included in the chosen subset
-            # Thus, the next value to check is at 1 row up and column index is copyC - wt[copyN-1]
-            copyC = copyC - wt[copyN-1]
-            copyN = copyN-1
+            # If not equal, then item at index n-1 is included in the chosen subset
+            # Thus, the next value to check is at 1 row up and column index is C - wt[n-1]
+            C = C - wt[n-1]
+            n = n-1
 
     print(f'Included item weights are non-zero: {wt} = ' + str(sum(wt)))
     print(f'Included item values are non-zero: {val} = ' + str(sum(val)))
 
-    return L[n][C]
 
-    # Generating the input randomly
-C = randint(20, 30)
-n = randint(5, 10)
-print('\nInput:\n')
-print(f'Knapsack capacity: {C}')
-print(f'Number of items: {n}')
-
-wt, val = [], []
-
-for _ in range(n):
-    weight = randint(1, 15)
-    value = randint(5, 50)
-    wt.append(weight)
-    val.append(value)
-
-print(f'Weight of items: {wt} = ' + str(sum(wt)))
-print(f'Value of items: {val} = ' + str(sum(val)))
-
-# Calling the knapSack function inside a print()
-print('\nOutput:\n')
-print(f'\nMaximum possible value = {knapSack(C, wt, val, n)}')
+# Program starting point
+generateInputs()
+print('\nOutput:')
+print(f'\nMaximum possible value = {knapSack()}')
+printOptimalSubset()
