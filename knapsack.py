@@ -42,8 +42,8 @@ def knapSack(C, wt, val, n):
             copyC = copyC - wt[copyN-1]
             copyN = copyN-1
 
-    print(f'Included item weights are non-zero: {wt}')
-    print(f'Included item values are non-zero: {val}')
+    print(f'Included item weights are non-zero: {wt} = ' + str(sum(wt)))
+    print(f'Included item values are non-zero: {val} = ' + str(sum(val)))
 
     return L[n][C]
 
@@ -62,8 +62,8 @@ for _ in range(n):
     wt.append(weight)
     val.append(value)
 
-print(f'Weight of items: {wt}')
-print(f'Value of items: {val}')
+print(f'Weight of items: {wt} = ' + str(sum(wt)))
+print(f'Value of items: {val} = ' + str(sum(val)))
 
 # Calling the knapSack function inside a print()
 print('\nOutput:\n')
