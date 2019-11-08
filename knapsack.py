@@ -34,7 +34,7 @@ def generateInputs():
 # Returns the maximum value that can be put in a knapsack of capacity C
 
 
-def knapSack():
+def findMaximumValue():
     # L is a list of n+1 number of items, where each item is a list itself containing C+1 number of items.
     global n, C, L
     L = [[0 for x in range(C+1)] for x in range(n+1)]
@@ -83,5 +83,5 @@ def printOptimalSubset():
 # Program starting point
 generateInputs()
 print('\nOutput:')
-print(f'\nMaximum possible value = {knapSack()}')
+print(f'\nMaximum possible value = {findMaximumValue()}')
 printOptimalSubset()
