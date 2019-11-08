@@ -3,11 +3,12 @@
 from random import randint
 
 # Declaring variables
-n = 0
-C = 0
-wt = []
-val = []
-L = []
+
+n = 0  # Number of items to choose from
+C = 0  # Capacity of the knapsack
+wt = []  # A list containing the weights of each item
+val = []  # A list containing the values of each item
+L = []  # A table/matrix (list of lists) containing every possible value.
 
 
 # Function for generating the inputs randomly
